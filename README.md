@@ -1,3 +1,3 @@
 # expro
 
-Build middleware for expres more expressive.
+Build middleware for express more expressive.
