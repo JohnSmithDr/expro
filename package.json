@@ -1,0 +1,21 @@
+{
+  "name": "expro",
+  "version": "0.0.1",
+  "description": "Build middleware for expres more expressive.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test/tests.js"
+  },
+  "keywords": [
+    "express",
+    "middleware",
+    "validator",
+    "converter"
+  ],
+  "author": "johnsmith1st <johnsmith1st@live.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.0"
+  }
+}
