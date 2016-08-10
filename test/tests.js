@@ -6,6 +6,8 @@ describe('expro', function () {
     console.log('ok');
   });
 
+  require('./test-expro-context');
+
   require('./test-expro');
 
 });
