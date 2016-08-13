@@ -27,5 +27,35 @@ describe('expro', function () {
     });
 
   });
+  
+  describe('.query', function () {
+
+    it('should return a query context', function () {
+      let ctx = expro.query;
+      expect(ctx).to.be.instanceOf(expro.Context);
+      expect(ctx._ctx).to.deep.equal({ in: 'query' });
+    });
+
+  });
+
+  describe('.body', function () {
+
+    it('should return a body context', function () {
+      let ctx = expro.body;
+      expect(ctx).to.be.instanceOf(expro.Context);
+      expect(ctx._ctx).to.deep.equal({ in: 'body' });
+    });
+
+  });
+
+  describe('.params', function () {
+
+    it('should return a params context', function () {
+      let ctx = expro.params;
+      expect(ctx).to.be.instanceOf(expro.Context);
+      expect(ctx._ctx).to.deep.equal({ in: 'params' });
+    });
+
+  });
 
 });
