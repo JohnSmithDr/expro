@@ -1,5 +1,13 @@
 'use strict';
 
+function MockRequest(opts) {
+  opts = opts || {};
+  this.headers = opts.headers || {};
+  this.params = opts.params || {};
+  this.query = opts.query || {};
+  this.body = opts.body || {};
+}
+
 function MockResponse() {
   this._status = null;
   this._json = null;
@@ -16,4 +24,4 @@ MockResponse.prototype = {
   }
 };
 
-module.exports = { MockResponse };
+module.exports = { MockRequest, MockResponse };
