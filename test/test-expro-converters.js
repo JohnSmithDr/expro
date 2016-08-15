@@ -333,3 +333,112 @@ describe('expro.ctx.prop().toBool()', function () {
   });
 
 });
+
+describe('expro.ctx.prop().toArray()', function () {
+
+  it('should be ok', function (done) {
+
+    let cases = [
+      [ '', [] ],
+      [ 'foo', ['foo'] ],
+      [ 'foo,bar,gee,neo', ['foo', 'bar', 'gee', 'neo'] ]
+    ];
+
+    let test = (i, value, expected, next) => {
+
+      let req = new MockRequest({ query: { foo: value } });
+
+      let mw = expro.query.prop('foo').toArray();
+
+      expect(mw).to.be.a('function');
+
+      mw(req, {}, () => {
+        try {
+          expect(req.query.foo).to.deep.equal(expected);
+          next(0, ++i);
+        }
+        catch(err) {
+          next(err);
+        }
+      });
+
+    };
+
+    let next = (err, i) => {
+
+      if (err) return done(err);
+      if (i >= cases.length) return done();
+
+      let d = cases[i];
+      test(i, d[0], d[1], next);
+
+    };
+
+    next(0, 0);
+
+  });
+
+  it('should be ok with separator', function (done) {
+
+    let cases = [
+      [ '', [] ],
+      [ 'foo', ['foo'] ],
+      [ 'foo_bar_gee_neo', ['foo', 'bar', 'gee', 'neo'] ]
+    ];
+
+    let test = (i, value, expected, next) => {
+
+      let req = new MockRequest({ query: { foo: value } });
+
+      let mw = expro.query.prop('foo').toArray('_');
+
+      expect(mw).to.be.a('function');
+
+      mw(req, {}, () => {
+        try {
+          expect(req.query.foo).to.deep.equal(expected);
+          next(0, ++i);
+        }
+        catch(err) {
+          next(err);
+        }
+      });
+
+    };
+
+    let next = (err, i) => {
+
+      if (err) return done(err);
+      if (i >= cases.length) return done();
+
+      let d = cases[i];
+      test(i, d[0], d[1], next);
+
+    };
+
+    next(0, 0);
+
+  });
+
+  it('should be ok if prop is undefined', function (done) {
+
+    let req = new MockRequest({ query: { } });
+
+    let mw = expro.query.prop('foo').toArray();
+
+    expect(mw).to.be.a('function');
+
+    mw(req, {}, () => {
+      try {
+        expect(req.query).to.not.have.property('foo');
+        done();
+      }
+      catch(err) {
+        done(err);
+      }
+
+    });
+
+  });
+
+});
