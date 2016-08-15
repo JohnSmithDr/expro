@@ -8,6 +8,8 @@ describe('expro', function () {
 
   require('./test-expro-await');
 
+  require('./test-expro-status');
+
   require('./test-expro-json');
 
 });

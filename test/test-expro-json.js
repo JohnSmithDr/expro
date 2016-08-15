@@ -98,7 +98,7 @@ describe('expro.jsonError()', function() {
   }
 
   it('should create a middleware', function () {
-    expect(expro.jsonResult()).to.be.a('function');
+    expect(expro.jsonError()).to.be.a('function');
   });
 
   it('should send error as json', function (done) {
