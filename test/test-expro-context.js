@@ -2,7 +2,10 @@
 
 const expect = require('chai').expect;
 
+const expro = require('../lib');
 const ExproContext = require('../lib/expro-context');
+
+const MockRequest = require('./test-mocks').MockRequest;
 
 describe('ExproContext', function () {
 
@@ -79,24 +82,6 @@ describe('ExproContext', function () {
 
   });
 
-  describe('#convert()', function () {
-
-    it('should be ok', function (done) {
-
-      let req = { body: { foo: '100' } };
-      let mw = ExproContext.in('body').prop('foo').convert(foo => parseInt(foo));
-
-      expect(mw).to.be.a('function');
-
-      mw(req, {}, () => {
-        expect(req).to.deep.equal({
-          body: { foo: 100 }
-        });
-        done();
-      });
-
-    });
-
-  });
+  
 
 });
