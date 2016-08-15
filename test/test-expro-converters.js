@@ -48,11 +48,53 @@ describe('expro.ctx.prop().toInt()', function () {
 
   });
 
+  it('should be ok with default value', function (done) {
+
+    let req = new MockRequest({ query: { foo: 'xxx' } });
+
+    let mw = expro.query.prop('foo').toInt(10);
+
+    expect(mw).to.be.a('function');
+
+    mw(req, {}, () => {
+      try {
+        expect(req.query.foo).to.equal(10);
+        done();
+      }
+      catch(err) {
+        done(err);
+      }
+
+    });
+
+  });
+
 });
 
 describe('expro.ctx.prop().toNumber()', function () {
 
   it('should be ok', function (done) {
+
+    let req = new MockRequest({ query: { foo: '1.1' } });
+
+    let mw = expro.query.prop('foo').toNumber();
+
+    expect(mw).to.be.a('function');
+
+    mw(req, {}, () => {
+      try {
+        expect(req.query.foo).to.equal(1.1);
+        done();
+      }
+      catch(err) {
+        done(err);
+      }
+
+    });
+
+  });
+
+  it('should be ok with default value', function (done) {
 
     let req = new MockRequest({ query: { foo: '1.1' } });
 
