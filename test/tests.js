@@ -18,7 +18,7 @@ describe('expro', function () {
 
   require('./test-expro-with');
 
-  require('./test-expro-set');
+  require('./test-expro-header');
 
   require('./test-expro-status');
 

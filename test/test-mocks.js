@@ -25,7 +25,7 @@ class MockResponse extends EventEmitter {
     this.expro = opts.expro;
   }
 
-  set(field, value) {
+  header(field, value) {
     if (typeof field === 'string' && typeof value === 'string') {
       this._headers = Object.assign({}, this._headers || {}, { [field]: value });
     }

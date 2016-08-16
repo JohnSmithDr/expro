@@ -54,9 +54,22 @@ To create expro await middleware.
 expro.await(req => async(req));
 ```
 
+#### expro.header(field [, value])
+
+To create middleware to write/overwrite response header.
+
+```js
+expro.header('Content-Type', 'text/plain');
+
+expro.header({
+  'Content-Type': 'text/plain',
+  'Content-Length': '123'
+});
+```
+
 #### expro.status(number)
 
-To create middleware to write/overwrite status code.
+To create middleware to write/overwrite response status code.
 
 ```js
 expro(
