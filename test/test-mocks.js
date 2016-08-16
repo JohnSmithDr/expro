@@ -20,8 +20,18 @@ class MockResponse extends EventEmitter {
     super();
     opts = opts || {};
     this._status = null;
+    this._headers = null;
     this._json = null;
     this.expro = opts.expro;
+  }
+
+  set(field, value) {
+    if (typeof field === 'string' && typeof value === 'string') {
+      this._headers = Object.assign({}, this._headers || {}, { [field]: value });
+    }
+    if (typeof field === 'object' && value === undefined) {
+      this._headers = Object.assign({}, this._headers || {}, field);
+    }
   }
 
   status(value) {
