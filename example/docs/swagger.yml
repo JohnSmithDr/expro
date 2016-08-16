@@ -31,3 +31,65 @@ paths:
           description: OK
         default:
           description: Error
+  /users:
+    x-swagger-router-controller: users
+    post:
+      summary: Create user
+      operationId: createUser
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - users
+  /users/{username}:
+    x-swagger-router-controller: users
+    get:
+      summary: Get user
+      operationId: getUser
+      parameters:
+        - $ref: "#/parameters/username"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - users
+    put:
+      summary: Update user
+      operationId: updateUser
+      parameters:
+        - $ref: "#/parameters/username"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - users
+    delete:
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+        - $ref: "#/parameters/username"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - users
+
+parameters:
+  petId:
+    name: petId
+    in: path
+    type: string
+    required: true
+  username:
+    name: username
+    in: path
+    type: string
+    required: true
