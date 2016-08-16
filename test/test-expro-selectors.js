@@ -91,7 +91,23 @@ describe('expro-selectors', function () {
       let cases = [
         [ 'foo', { foo: 'bar' }, 'bar' ],
         [ 'foo.bar', { foo: { bar: 'gee' } }, 'gee' ],
-        [ 'foo.bar.gee', { foo: { bar: { gee: 'you found me' } } }, 'you found me' ],
+        [ 'foo.bar.gee', { foo: { bar: { gee: 'you found me' } } }, 'you found me' ]
+      ];
+
+      cases.forEach(x => test.apply(this, x));
+
+    });
+
+    it('should return undefined if path is unreachable', function () {
+
+      let test = (path, src) => {
+        expect(selectors.pathSelector(path)(src)).to.be.undefined;
+      };
+
+      let cases = [
+        [ 'foo', {}, 'bar' ],
+        [ 'foo.bar', { foo: {} } ],
+        [ 'foo.bar.gee', { foo: { bar: {} } } ]
       ];
 
       cases.forEach(x => test.apply(this, x));
@@ -135,9 +151,18 @@ describe('expro-selectors', function () {
 
   });
 
-  describe('.fromArray', function () {
+  describe('.fromArray()', function () {
+
+    it('should be ok', function () {
+
+      let arr = selectors.fromArray([ 'foo', 'bar', x => x && x.foo, x => x && x.bar, {} ]);
+      arr.forEach(fn => {
+        expect(fn).to.be.a('function');
+        expect(fn()).to.be.undefined;
+      });
+
+    });
 
   });
-  
 
 });
