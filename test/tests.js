@@ -10,6 +10,8 @@ describe('expro', function () {
 
   require('./test-expro-converters');
 
+  require('./test-expro-async');
+
   require('./test-expro-await');
 
   require('./test-expro-with');
