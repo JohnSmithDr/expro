@@ -1,0 +1,33 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Swagger Petstore With Express & Expro
+  description: |
+    Swagger Petstore server api example to demonstrate the usage of expro with express.
+    <br/>Origin from [http://petstore.swagger.io/](http://petstore.swagger.io/) with some modification.
+host: localhost:3000
+# basePath prefixes all resource paths
+basePath: /api/v1
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+
+paths:
+  /:
+    x-swagger-router-controller: index
+    get:
+      summary: Hello World
+      operationId: index
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
