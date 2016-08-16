@@ -12,6 +12,8 @@ describe('expro', function () {
 
   require('./test-expro-await');
 
+  require('./test-expro-with');
+
   require('./test-expro-status');
 
   require('./test-expro-json');
