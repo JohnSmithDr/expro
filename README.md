@@ -2,4 +2,103 @@
 
 [![Build Status](https://travis-ci.org/JohnSmithDr/expro.svg?branch=master)](https://travis-ci.org/JohnSmithDr/expro)
 
-Build middleware for express more expressive.
+Build express middleware more expressive.
+
+Install with:
+
+```
+npm install expro
+```
+
+And make a test:
+
+```
+npm test
+```
+
+## APIs
+
+#### expro(fn1, fn2, fn3 ...)
+
+To create middleware chain for express.
+
+```js
+let mw = expro(
+  (req, res, next) => next(),
+  (req, res, next) => next(),
+  ...
+  (req, res, next) => next(),
+);
+
+let app = express();
+app.use(mw);
+```
+
+#### expro.async(fn)
+
+To create promise for async process.
+
+```js
+expro
+  .async(done => fs.readFile('./config', done))
+  .then(content => {
+    // do with file content ...
+  });
+```
+
+#### expro.await(fn)
+
+To create expro await middleware.
+
+```js
+expro.await(req => async(req));
+```
+
+#### expro.status(number)
+
+To create middleware to write/overwrite status code.
+
+```js
+expro(
+  expro.await(req => async(req)),
+  expro.status(201),
+  expro.jsonResult()
+);
+```
+
+#### expro.jsonResult()
+
+To create middleware to send json result.
+
+```js
+let app = express();
+
+app.get('/', (req, res, next) => {
+  res.expro.result = { foo: 'bar' };
+  next();
+});
+
+app.use(expro.jsonResult());
+
+// HTTP GET / -> { code: 200, result: { foo: 'bar' } }
+```
+
+#### expro.jsonError()
+
+To create middleware to send json error.
+
+```js
+let app = express();
+
+app.get('/', (req, res, next) => {
+  next(Error('oops'));
+});
+
+app.use(expro.jsonError());
+
+// HTTP GET / -> { code: 500, error: { message: 'oops' } }
+```
+
+## License
+
+MIT
