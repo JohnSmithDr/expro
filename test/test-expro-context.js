@@ -26,13 +26,4 @@ describe('ExproContext', function () {
 
   });
 
-  describe('#prop()', function () {
-
-    it('should be ok', function () {
-      let ctx = ExproContext.in('foo').prop('bar');
-      expect(ctx._ctx).to.deep.equal({ in: 'foo', prop: 'bar' });
-    });
-
-  });
-
 });

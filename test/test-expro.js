@@ -59,3 +59,14 @@ describe('expro.params', function () {
   });
 
 });
+
+describe('expro.ctx.prop()', function () {
+
+  it('should be ok', function () {
+    let ctx = expro.query.prop('foo');
+    expect(ctx).to.be.instanceOf(expro.Context);
+    expect(ctx._ctx).to.deep.equal({ in: 'query', prop: 'foo' });
+  });
+
+});
+
