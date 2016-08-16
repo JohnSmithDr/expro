@@ -8,6 +8,8 @@ describe('expro', function () {
 
   require('./test-expro');
 
+  require('./test-expro-validate');
+
   require('./test-expro-converters');
 
   require('./test-expro-async');
