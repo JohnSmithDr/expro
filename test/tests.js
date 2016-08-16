@@ -1,5 +1,7 @@
 'use strict';
 
+require('./test-expro-selectors');
+
 describe('expro', function () {
 
   require('./test-expro-context');
