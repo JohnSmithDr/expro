@@ -8,7 +8,7 @@ paths:
         200:
           description: OK
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - goods
     post:
@@ -16,9 +16,9 @@ paths:
       operationId: createGoods
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - goods
   /goods/{goodsId}:
@@ -30,9 +30,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - goods
     put:
@@ -42,9 +42,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - goods
     delete:
@@ -54,9 +54,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/ApiResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - goods
 
@@ -66,6 +66,44 @@ parameters:
     in: path
     type: string
     required: true
+
+definitions:
+  Goods:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      desc:
+        type: string
+      price:
+        type: number
+      category:
+        type: string
+      tags:
+        type: array
+        items:
+          type: string
+      count:
+        type: integer
+      status:
+        type: integer
+  OrderResult:
+    properties:
+      code:
+        type: integer
+        default: 200
+      result:
+        type: object
+        properties:
+          order:
+            $ref: "#/definitions/Order"
+
+responses:
+  OrderResultResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/OrderResult"
 
 tags:
   - name: goods

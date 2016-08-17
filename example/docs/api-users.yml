@@ -4,11 +4,24 @@ paths:
     post:
       summary: Create user
       operationId: createUser
+      parameters:
+        - in: formData
+          name: username
+          type: string
+          description: user full name
+        - in: formData
+          name: email
+          type: string
+          description: user email address
+        - in: formData
+          name: phone
+          type: string
+          description: user phone number
       responses:
         200:
-          description: OK
+          $ref: "#/responses/UserResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - users
   /users/{username}:
@@ -20,9 +33,9 @@ paths:
         - $ref: "#/parameters/username-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/UserResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - users
     put:
@@ -32,9 +45,9 @@ paths:
         - $ref: "#/parameters/username-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/UserResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - users
     delete:
@@ -44,9 +57,9 @@ paths:
         - $ref: "#/parameters/username-in-path"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/ApiResponse"
         default:
-          description: Error
+          $ref: "#/responses/ApiErrorResponse"
       tags:
         - users
 
@@ -56,6 +69,34 @@ parameters:
     in: path
     type: string
     required: true
+
+definitions:
+  User:
+    properties:
+      id:
+        type: string
+      username:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+  UserResult:
+    properties:
+      code:
+        type: integer
+        default: 200
+      result:
+        type: object
+        properties:
+          user:
+            $ref: "#/definitions/User"
+
+responses:
+  UserResultResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/UserResult"
 
 tags:
   - name: users

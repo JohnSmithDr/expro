@@ -20,3 +20,38 @@ consumes:
 produces:
   - application/json
   - application/xml
+
+definitions:
+
+  ApiResult:
+    additionalProperties: true
+    properties:
+      code:
+        type: integer
+        default: 200
+      result:
+        type: string
+        default: OK
+  ApiErrorResult:
+    properties:
+      code:
+        type: integer
+        default: 500
+      error:
+        $ref: "#/definitions/ApiError"
+  ApiError:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+
+responses:
+  ApiResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/ApiResult"
+  ApiErrorResponse:
+    description: Error
+    schema:
+      $ref: "#/definitions/ApiErrorResult"

@@ -55,6 +55,41 @@ parameters:
     type: string
     required: true
 
+definitions:
+  OrderGoods:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+      quantity:
+        type: integer
+  Order:
+    properties:
+      id:
+        type: string
+      goods:
+        type: array
+        items:
+          $ref: "#/definitions/Goods"
+      totalFee:
+        type: number
+      buyer:
+        $ref: "#/definitions/User"
+      contactName:
+        type: string
+      contactPhone:
+        type: string
+      shippingAddress:
+        type: string
+      shippingDate:
+        type: string
+        format: dateTime
+      status:
+        type: string
+
 tags:
   - name: orders
     description: orders operations
