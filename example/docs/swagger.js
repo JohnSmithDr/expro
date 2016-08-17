@@ -18,12 +18,14 @@ const swaggerDoc = (opts) => {
   let apis = typeof opts.apis === 'string' ? [opts.apis] : opts.apis;
 
   if (Array.isArray(apis) && apis.length) {
+    
     spec = apis.reduce((dest, filename) => {
       let doc = mount(filename);
       dest.paths = Object.assign(dest.paths || {}, doc.paths || {});
       dest.parameters = Object.assign(dest.parameters || {}, doc.parameters || {});
       dest.definitions = Object.assign(dest.definitions || {}, doc.definitions || {});
       dest.responses = Object.assign(dest.responses || {}, doc.responses || {});
+      if (Array.isArray(doc.tags) && doc.tags.length) dest.tags =  (dest.tags || []).concat(doc.tags);
       return dest;
 
     }, spec);
@@ -35,5 +37,10 @@ const swaggerDoc = (opts) => {
 
 module.exports = swaggerDoc({
   spec: 'swagger.yml',
-  apis: ['swagger-index.yml']
+  apis: [
+    'api-index.yml',
+    'api-users.yml',
+    'api-goods.yml',
+    'api-orders.yml'
+  ]
 });

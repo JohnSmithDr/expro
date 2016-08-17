@@ -1,0 +1,72 @@
+paths:
+  /goods:
+    x-swagger-router-controller: goods
+    get:
+      summary: List goods
+      operationId: listGoods
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - goods
+    post:
+      summary: Create goods
+      operationId: createGoods
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - goods
+  /goods/{goodsId}:
+    x-swagger-router-controller: goods
+    get:
+      summary: Get goods
+      operationId: getGoods
+      parameters:
+        - $ref: "#/parameters/goods-id-in-path"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - goods
+    put:
+      summary: Update goods
+      operationId: updateGoods
+      parameters:
+        - $ref: "#/parameters/goods-id-in-path"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - goods
+    delete:
+      summary: Delete goods
+      operationId: deleteGoods
+      parameters:
+        - $ref: "#/parameters/goods-id-in-path"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - goods
+
+parameters:
+  goods-id-in-path:
+    name: goodsId
+    in: path
+    type: string
+    required: true
+
+tags:
+  - name: goods
+    description: goods operations

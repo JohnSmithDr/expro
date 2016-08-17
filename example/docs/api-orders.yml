@@ -1,0 +1,60 @@
+paths:
+  /orders:
+    x-swagger-router-controller: orders
+    get:
+      summary: Query orders
+      operationId: queryOrders
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - orders
+    post:
+      summary: Create order
+      operationId: createOrder
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - orders
+  /orders/{orderId}:
+    x-swagger-router-controller: orders
+    get:
+      summary: Get order
+      operationId: getOrder
+      parameters:
+        - $ref: "#/parameters/order-id-in-path"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - orders
+    delete:
+      summary: Delete order
+      operationId: deleteOrder
+      parameters:
+        - $ref: "#/parameters/order-id-in-path"
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
+      tags:
+        - orders
+
+parameters:
+  order-id-in-path:
+    name: orderId
+    in: path
+    type: string
+    required: true
+
+tags:
+  - name: orders
+    description: orders operations
