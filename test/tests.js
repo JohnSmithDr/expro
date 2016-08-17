@@ -24,4 +24,6 @@ describe('expro', function () {
 
   require('./test-expro-json');
 
+  require('./test-expro-format-result');
+
 });

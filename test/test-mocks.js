@@ -12,6 +12,20 @@ class MockRequest {
     this.body = opts.body || {};
   }
 
+  accepts(types) {
+    let acc = this.headers['Accept'] || this.headers['accept'];
+    if (typeof types === 'string') {
+      return acc.indexOf(types) >= 0 ? types : undefined;
+    }
+    else if (Array.isArray(types) && types.length) {
+      for (let t of types) {
+        let x = this.accepts(t);
+        if (x) return x;
+      }
+    }
+    return undefined;
+  }
+
 }
 
 class MockResponse extends EventEmitter {
@@ -22,7 +36,9 @@ class MockResponse extends EventEmitter {
     this._status = null;
     this._headers = null;
     this._json = null;
+    this._send = null;
     this.expro = opts.expro;
+    this.req = opts.req;
   }
 
   header(field, value) {
@@ -43,6 +59,16 @@ class MockResponse extends EventEmitter {
     this._json = value;
     this.end();
     return this;
+  }
+
+  send(obj) {
+    this._send = obj;
+    this.end();
+  }
+
+  format(formatter) {
+    let type = this.req.accepts(['text', 'html', 'json', 'xml']);
+    return type ? formatter[type]() : formatter['default']();
   }
 
   end() {
