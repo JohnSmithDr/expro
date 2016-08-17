@@ -31,8 +31,8 @@ swaggerTools.initializeMiddleware(swaggerSpec, function (middleware) {
   // Serve the Swagger documents and Swagger UI
   app.use(middleware.swaggerUi());
 
-  app.use(expro.jsonResult());
-  app.use(expro.jsonError());
+  app.use(expro.formatResult());
+  app.use(expro.formatError());
 
   app.listen(PORT, (err) => {
     if (err) {
