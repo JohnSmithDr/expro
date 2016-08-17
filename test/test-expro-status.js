@@ -10,7 +10,9 @@ describe('expro.status()', function () {
 
   it('should create a middleware', function () {
 
-    expect(expro.status(200)).to.be.a('function');
+    let mw = expro.status(200);
+    expect(mw).to.be.a('function');
+    expect(mw.name).to.equal('exproStatusCodeOverrideMiddleware');
 
   });
 
