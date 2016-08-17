@@ -1,7 +1,39 @@
 'use strict';
 
-let fs = require('fs');
-let path = require('path');
-let yaml = require('js-yaml');
+const fs = require('fs');
+const path = require('path');
+const yaml = require('js-yaml');
 
-module.exports = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, 'swagger.yml'), 'utf8'));
+const mount = (filename) => yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, filename), 'utf8'));
+
+/**
+ *
+ * @param {object} opts
+ * @param {string} opts.spec
+ * @param {Array|string} [opts.apis]
+ */
+const swaggerDoc = (opts) => {
+
+  let spec = mount(opts.spec);
+  let apis = typeof opts.apis === 'string' ? [opts.apis] : opts.apis;
+
+  if (Array.isArray(apis) && apis.length) {
+    spec = apis.reduce((dest, filename) => {
+      let doc = mount(filename);
+      dest.paths = Object.assign(dest.paths || {}, doc.paths || {});
+      dest.parameters = Object.assign(dest.parameters || {}, doc.parameters || {});
+      dest.definitions = Object.assign(dest.definitions || {}, doc.definitions || {});
+      dest.responses = Object.assign(dest.responses || {}, doc.responses || {});
+      return dest;
+
+    }, spec);
+  }
+
+  return spec;
+
+};
+
+module.exports = swaggerDoc({
+  spec: 'swagger.yml',
+  apis: ['swagger-index.yml']
+});

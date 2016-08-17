@@ -1,10 +1,9 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: Swagger Petstore With Express & Expro
+  title: Express & Expro Example Swagger Doc
   description: |
-    Swagger Petstore server api example to demonstrate the usage of expro with express.
-    <br/>Origin from [http://petstore.swagger.io/](http://petstore.swagger.io/) with some modification.
+    Online shopping server api example to demonstrate the usage of expro with express.
 host: localhost:3000
 # basePath prefixes all resource paths
 basePath: /api/v1
@@ -16,80 +15,8 @@ schemes:
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
+  - application/xml
 # format of the responses to the client (Accepts)
 produces:
   - application/json
-
-paths:
-  /:
-    x-swagger-router-controller: index
-    get:
-      summary: Hello World
-      operationId: index
-      responses:
-        200:
-          description: OK
-        default:
-          description: Error
-  /users:
-    x-swagger-router-controller: users
-    post:
-      summary: Create user
-      operationId: createUser
-      responses:
-        200:
-          description: OK
-        default:
-          description: Error
-      tags:
-        - users
-  /users/{username}:
-    x-swagger-router-controller: users
-    get:
-      summary: Get user
-      operationId: getUser
-      parameters:
-        - $ref: "#/parameters/username"
-      responses:
-        200:
-          description: OK
-        default:
-          description: Error
-      tags:
-        - users
-    put:
-      summary: Update user
-      operationId: updateUser
-      parameters:
-        - $ref: "#/parameters/username"
-      responses:
-        200:
-          description: OK
-        default:
-          description: Error
-      tags:
-        - users
-    delete:
-      summary: Delete user
-      operationId: deleteUser
-      parameters:
-        - $ref: "#/parameters/username"
-      responses:
-        200:
-          description: OK
-        default:
-          description: Error
-      tags:
-        - users
-
-parameters:
-  petId:
-    name: petId
-    in: path
-    type: string
-    required: true
-  username:
-    name: username
-    in: path
-    type: string
-    required: true
+  - application/xml

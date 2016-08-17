@@ -1,0 +1,11 @@
+paths:
+  /:
+    x-swagger-router-controller: index
+    get:
+      summary: Hello World
+      operationId: index
+      responses:
+        200:
+          description: OK
+        default:
+          description: Error
