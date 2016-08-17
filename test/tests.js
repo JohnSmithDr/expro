@@ -26,4 +26,6 @@ describe('expro', function () {
 
   require('./test-expro-format-result');
 
+  require('./test-expro-format-error');
+
 });

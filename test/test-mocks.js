@@ -15,7 +15,7 @@ class MockRequest {
   accepts(types) {
     let acc = this.headers['Accept'] || this.headers['accept'];
     if (typeof types === 'string') {
-      return acc.indexOf(types) >= 0 ? types : undefined;
+      return acc && acc.indexOf(types) >= 0 ? types : undefined;
     }
     else if (Array.isArray(types) && types.length) {
       for (let t of types) {
