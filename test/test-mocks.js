@@ -57,6 +57,7 @@ class MockResponse extends EventEmitter {
 
   json(value) {
     this._json = value;
+    this._send = value;
     this.end();
     return this;
   }

@@ -3,6 +3,7 @@
 const expect = require('chai').expect;
 
 const expro = require('../lib');
+const logger = require('./test-logger');
 
 const MockRequest = require('./test-mocks').MockRequest;
 const MockResponse = require('./test-mocks').MockResponse;
@@ -32,8 +33,9 @@ describe('expro.formatResult()', function () {
 
     res.on('end', () => {
       try {
+        logger.debug('result:', res._send);
         expect(res._status).to.equal(200);
-        expect(res._json).to.deep.equal({
+        expect(res._send).to.deep.equal({
           code: 200,
           result: { foo: 'bar' }
         });
@@ -67,8 +69,9 @@ describe('expro.formatResult()', function () {
 
     res.on('end', () => {
       try {
+        logger.debug('result:', res._send);
         expect(res._status).to.equal(201);
-        expect(res._json).to.deep.equal({
+        expect(res._send).to.deep.equal({
           code: 201,
           result: 'created'
         });
@@ -102,6 +105,7 @@ describe('expro.formatResult()', function () {
 
     res.on('end', () => {
       try {
+        logger.debug('result:', res._send);
         expect(res._status).to.equal(201);
         expect(res._send).to.deep.equal('created');
         done();
@@ -116,7 +120,34 @@ describe('expro.formatResult()', function () {
         res.status(code).send(result.toString());
       }
     })
-    (null, res, () => {
+    (req, res, () => {
+      done(Error('should not go here'));
+    });
+  });
+
+  it('should send 406 for not acceptable', function (done) {
+
+    let req = new MockRequest();
+    let res = new MockResponse({
+      req: req,
+      expro: {
+        result: "You can't see me"
+      }
+    });
+
+    res.on('end', () => {
+      try {
+        logger.debug('result:', res._send);
+        expect(res._status).to.equal(406);
+        expect(res._send).to.deep.equal('Not Acceptable');
+        done();
+      }
+      catch(err) {
+        done(err);
+      }
+    });
+
+    expro.formatResult()(req, res, () => {
       done(Error('should not go here'));
     });
   });

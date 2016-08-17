@@ -3,11 +3,10 @@
 const expect = require('chai').expect;
 
 const expro = require('../lib');
+const logger = require('./test-logger');
 
 const MockRequest = require('./test-mocks').MockRequest;
 const MockResponse = require('./test-mocks').MockResponse;
-
-const logger = require('./test-logger');
 
 describe('expro.formatError()', function() {
 
@@ -26,9 +25,9 @@ describe('expro.formatError()', function() {
 
       res.on('end', () => {
         try {
-          logger.debug('result:', res._json);
+          logger.debug('result:', res._send);
           expect(res._status).to.equal(expStatusCode);
-          expect(res._json).to.deep.equal({
+          expect(res._send).to.deep.equal({
             code: expStatusCode,
             error: {
               code: expErrorCode,
