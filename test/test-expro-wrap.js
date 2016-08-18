@@ -8,13 +8,13 @@ const logger = require('./test-logger');
 const MockRequest = require('./test-mocks').MockRequest;
 const MockResponse = require('./test-mocks').MockResponse;
 
-describe('expro.mapResult()', function () {
+describe('expro.wrap()', function () {
 
   it('should create a middleware', function () {
 
-    let mw = expro.mapResult(x => x);
+    let mw = expro.wrap('data');
     expect(mw).to.be.a('function');
-    expect(mw.name).to.equal('exproMapResultMiddleware');
+    expect(mw.name).to.equal('exproWrapResultMiddleware');
 
   });
 
@@ -25,21 +25,15 @@ describe('expro.mapResult()', function () {
         res.expro.result = { foo: 'foo', bar: 'bar' };
         next();
       },
-      expro.mapResult(x => {
-        logger.debug('x:', x);
-        return Object
-          .keys(x)
-          .reduce((y, key) => {
-            y[key] = y[key].toUpperCase();
-            return y;
-          }, x);
-      }),
+      expro.wrap('data'),
       (req, res, next) => {
         try {
           logger.debug('result:', res.expro.result);
           expect(res.expro.result).to.deep.equal({
-            foo: 'FOO',
-            bar: 'BAR'
+            data: {
+              foo: 'foo',
+              bar: 'bar'
+            }
           });
           next();
         }

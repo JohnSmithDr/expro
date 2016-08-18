@@ -24,6 +24,8 @@ describe('expro', function () {
 
   require('./test-expro-map-result');
 
+  require('./test-expro-wrap');
+
   require('./test-expro-json');
 
   require('./test-expro-format-result');
