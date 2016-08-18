@@ -33,8 +33,9 @@ class Collection {
     return Promise.resolve(arr.map(s => this.insertOrUpdate(s)));
   }
 
-  find() {
-    return Promise.resolve(Array.from(this._coll));
+  items() {
+    let arr = Array.from(this._coll).map(s => s[1]);
+    return Promise.resolve(arr);
   }
 
   findById(id) {
@@ -49,8 +50,28 @@ class Collection {
 
 }
 
+class UsersCollection extends Collection {
+
+  constructor() {
+    super('users');
+  }
+
+  findByUsername(username) {
+    let users = this.items().filter(s => s.username === username);
+    return Promise.resolve(users);
+  }
+
+  findAndRemoveByUsername(username) {
+    let users = this.items().filter(s => s.username === username);
+    return users[0]
+      ? this.findAndRemoveById(users[0].id)
+      : Promise.resolve(null);
+  }
+
+}
+
 const dataSource = {
-  users: new Collection('users'),
+  users: new UsersCollection(),
   goods: new Collection('goods'),
   orders: new Collection('orders')
 };
