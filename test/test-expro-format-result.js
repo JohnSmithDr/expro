@@ -36,7 +36,6 @@ describe('expro.formatResult()', function () {
         logger.debug('result:', res._send);
         expect(res._status).to.equal(200);
         expect(res._send).to.deep.equal({
-          code: 200,
           result: { foo: 'bar' }
         });
         done();
@@ -72,7 +71,6 @@ describe('expro.formatResult()', function () {
         logger.debug('result:', res._send);
         expect(res._status).to.equal(201);
         expect(res._send).to.deep.equal({
-          code: 201,
           result: 'created'
         });
         done();

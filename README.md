@@ -75,41 +75,8 @@ To create middleware to write/overwrite response status code.
 expro(
   expro.await(req => async(req)),
   expro.status(201),
-  expro.jsonResult()
+  expro.formatResult()
 );
-```
-
-#### expro.jsonResult()
-
-To create middleware to send json result.
-
-```js
-let app = express();
-
-app.get('/', (req, res, next) => {
-  res.expro.result = { foo: 'bar' };
-  next();
-});
-
-app.use(expro.jsonResult());
-
-// HTTP GET / -> { code: 200, result: { foo: 'bar' } }
-```
-
-#### expro.jsonError()
-
-To create middleware to send json error.
-
-```js
-let app = express();
-
-app.get('/', (req, res, next) => {
-  next(Error('oops'));
-});
-
-app.use(expro.jsonError());
-
-// HTTP GET / -> { code: 500, error: { message: 'oops' } }
 ```
 
 ## License

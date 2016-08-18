@@ -28,7 +28,6 @@ describe('expro.formatError()', function() {
           logger.debug('result:', res._send);
           expect(res._status).to.equal(expStatusCode);
           expect(res._send).to.deep.equal({
-            code: expStatusCode,
             error: {
               code: expErrorCode,
               message: expMessage
@@ -66,7 +65,7 @@ describe('expro.formatError()', function() {
           logger.debug('text:', res._send);
           expect(res._status).to.equal(expStatusCode);
           expect(res._send).to.equal(
-            `CODE=${expStatusCode} ERR_CODE=${expErrorCode || 'undefined'} ERR_MESSAGE=${expMessage || 'undefined'}`);
+            `ERROR_CODE=${expErrorCode || 'undefined'} ERROR_MESSAGE=${expMessage || 'undefined'}`);
           done();
         }
         catch(err) {
@@ -79,7 +78,7 @@ describe('expro.formatError()', function() {
           let code = err.statusCode || err.status || 500;
           let errCode = err.errorCode || err.code || 'undefined';
           let errMessage = err.message || 'undefined';
-          res.status(code).send(`CODE=${code} ERR_CODE=${errCode} ERR_MESSAGE=${errMessage}`);
+          res.status(code).send(`ERROR_CODE=${errCode} ERROR_MESSAGE=${errMessage}`);
         }
       })
       (err, req, res, (err) => {
