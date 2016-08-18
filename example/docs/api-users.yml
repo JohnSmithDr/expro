@@ -43,6 +43,14 @@ paths:
       operationId: updateUser
       parameters:
         - $ref: "#/parameters/username-in-path"
+        - in: formData
+          name: email
+          type: string
+          description: user email address
+        - in: formData
+          name: phone
+          type: string
+          description: user phone number
       responses:
         200:
           $ref: "#/responses/UserResultResponse"
@@ -83,9 +91,6 @@ definitions:
         type: string
   UserResult:
     properties:
-      code:
-        type: integer
-        default: 200
       result:
         type: object
         properties:
