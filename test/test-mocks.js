@@ -37,7 +37,7 @@ class MockResponse extends EventEmitter {
     this._headers = null;
     this._json = null;
     this._send = null;
-    this.expro = opts.expro;
+    this.expro = opts.expro || {};
     this.req = opts.req;
   }
 
