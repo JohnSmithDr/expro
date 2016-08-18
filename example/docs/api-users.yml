@@ -5,18 +5,11 @@ paths:
       summary: Create user
       operationId: createUser
       parameters:
-        - in: formData
-          name: username
-          type: string
-          description: user full name
-        - in: formData
-          name: email
-          type: string
-          description: user email address
-        - in: formData
-          name: phone
-          type: string
-          description: user phone number
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserCreation"
       responses:
         200:
           $ref: "#/responses/UserResultResponse"
@@ -30,9 +23,9 @@ paths:
       summary: Get user
       operationId: getUser
       parameters:
-        - $ref: "#/parameters/username-in-path"
+        - $ref: "#/parameters/username"
       responses:
-        200:
+        201:
           $ref: "#/responses/UserResultResponse"
         default:
           $ref: "#/responses/ErrorResponse"
@@ -42,15 +35,12 @@ paths:
       summary: Update user
       operationId: updateUser
       parameters:
-        - $ref: "#/parameters/username-in-path"
-        - in: formData
-          name: email
-          type: string
-          description: user email address
-        - in: formData
-          name: phone
-          type: string
-          description: user phone number
+        - $ref: "#/parameters/username"
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/UserModification"
       responses:
         200:
           $ref: "#/responses/UserResultResponse"
@@ -62,7 +52,7 @@ paths:
       summary: Delete user
       operationId: deleteUser
       parameters:
-        - $ref: "#/parameters/username-in-path"
+        - $ref: "#/parameters/username"
       responses:
         200:
           $ref: "#/responses/UserResultResponse"
@@ -72,13 +62,27 @@ paths:
         - users
 
 parameters:
-  username-in-path:
+  username:
     name: username
     in: path
     type: string
     required: true
 
 definitions:
+  UserCreation:
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+  UserModification:
+    properties:
+      email:
+        type: string
+      phone:
+        type: string
   User:
     properties:
       id:

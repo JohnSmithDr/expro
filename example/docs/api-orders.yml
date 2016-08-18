@@ -6,19 +6,25 @@ paths:
       operationId: queryOrders
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrdersQueryResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ErrorResponse"
       tags:
         - orders
     post:
       summary: Create order
       operationId: createOrder
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/OrderCreation"
       responses:
-        200:
-          description: OK
+        201:
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ErrorResponse"
       tags:
         - orders
   /orders/{orderId}:
@@ -27,38 +33,95 @@ paths:
       summary: Get order
       operationId: getOrder
       parameters:
-        - $ref: "#/parameters/order-id-in-path"
+        - $ref: "#/parameters/orderId"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ErrorResponse"
       tags:
         - orders
     delete:
       summary: Delete order
       operationId: deleteOrder
       parameters:
-        - $ref: "#/parameters/order-id-in-path"
+        - $ref: "#/parameters/orderId"
       responses:
         200:
-          description: OK
+          $ref: "#/responses/OrderResultResponse"
         default:
-          description: Error
+          $ref: "#/responses/ErrorResponse"
+      tags:
+        - orders
+  /orders/{orderId}/shippingData:
+    x-swagger-router-controller: orders
+    patch:
+      summary: Update order shipping data
+      operationId: updateOrderShippingData
+      parameters:
+        - $ref: "#/parameters/orderId"
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              shippingData:
+                type: string
+                format: dateTime
+      responses:
+        200:
+          $ref: "#/responses/OrderResultResponse"
+        default:
+          $ref: "#/responses/ErrorResponse"
+      tags:
+        - orders
+  /orders/{orderId}/status:
+    x-swagger-router-controller: orders
+    patch:
+      summary: Update order status
+      operationId: updateOrderStatus
+      parameters:
+        - $ref: "#/parameters/orderId"
+        - in: body
+          name: body
+          required: true
+          schema:
+            properties:
+              status:
+                type: string
+      responses:
+        200:
+          $ref: "#/responses/OrderResultResponse"
+        default:
+          $ref: "#/responses/ErrorResponse"
       tags:
         - orders
 
 parameters:
-  order-id-in-path:
+  orderId:
     name: orderId
     in: path
     type: string
     required: true
 
 definitions:
+  OrderCreation:
+    properties:
+      goods:
+        type: array
+        items:
+          $ref: "#/definitions/Goods"
+      buyer:
+        $ref: "#/definitions/User"
+      contactName:
+        type: string
+      contactPhone:
+        type: string
+      shippingAddress:
+        type: string
   OrderGoods:
     properties:
-      id:
+      goodsId:
         type: string
       name:
         type: string
@@ -99,11 +162,13 @@ definitions:
   OrdersQueryResult:
     properties:
       result:
-        type: array
-        items:
-          $ref: "#/definitions/Order"
-      pagination:
-        $ref: "#/definitions/Pagination"
+        properties:
+          orders:
+            type: array
+            items:
+              $ref: "#/definitions/Order"
+          pagination:
+            $ref: "#/definitions/Pagination"
 
 responses:
   OrderResultResponse:

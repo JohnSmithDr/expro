@@ -6,7 +6,7 @@ paths:
       operationId: listGoods
       responses:
         200:
-          description: OK
+          $ref: "#/responses/GoodsQueryResultResponse"
         default:
           $ref: "#/responses/ErrorResponse"
       tags:
@@ -14,8 +14,14 @@ paths:
     post:
       summary: Create goods
       operationId: createGoods
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/GoodsCreation"
       responses:
-        200:
+        201:
           $ref: "#/responses/GoodsResultResponse"
         default:
           $ref: "#/responses/ErrorResponse"
@@ -27,7 +33,7 @@ paths:
       summary: Get goods
       operationId: getGoods
       parameters:
-        - $ref: "#/parameters/goods-id-in-path"
+        - $ref: "#/parameters/goodsId"
       responses:
         200:
           $ref: "#/responses/GoodsResultResponse"
@@ -39,7 +45,12 @@ paths:
       summary: Update goods
       operationId: updateGoods
       parameters:
-        - $ref: "#/parameters/goods-id-in-path"
+        - $ref: "#/parameters/goodsId"
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/GoodsModification"
       responses:
         200:
           $ref: "#/responses/GoodsResultResponse"
@@ -51,7 +62,7 @@ paths:
       summary: Delete goods
       operationId: deleteGoods
       parameters:
-        - $ref: "#/parameters/goods-id-in-path"
+        - $ref: "#/parameters/goodsId"
       responses:
         200:
           $ref: "#/responses/GoodsResultResponse"
@@ -61,13 +72,45 @@ paths:
         - goods
 
 parameters:
-  goods-id-in-path:
+  goodsId:
     name: goodsId
     in: path
     type: string
     required: true
 
 definitions:
+  GoodsCreation:
+    properties:
+      name:
+        type: string
+      desc:
+        type: string
+      category:
+        type: string
+      price:
+        type: number
+      count:
+        type: integer
+      tags:
+        type: array
+        items:
+          type: string
+  GoodsModification:
+    properties:
+      name:
+        type: string
+      desc:
+        type: string
+      category:
+        type: string
+      price:
+        type: number
+      count:
+        type: integer
+      tags:
+        type: array
+        items:
+          type: string
   Goods:
     properties:
       id:
@@ -76,33 +119,33 @@ definitions:
         type: string
       desc:
         type: string
-      price:
-        type: number
       category:
         type: string
+      price:
+        type: number
+      count:
+        type: integer
       tags:
         type: array
         items:
           type: string
-      count:
-        type: integer
-      status:
-        type: integer
   GoodsResult:
     properties:
       result:
         type: object
         properties:
-          order:
+          goods:
             $ref: "#/definitions/Goods"
   GoodsQueryResult:
     properties:
       result:
-        type: array
-        items:
-          $ref: "#/definitions/Goods"
-      pagination:
-        $ref: "#/definitions/Pagination"
+        properties:
+          goods:
+            type: array
+            items:
+              $ref: "#/definitions/Goods"
+          pagination:
+            $ref: "#/definitions/Pagination"
 
 responses:
   GoodsResultResponse:
