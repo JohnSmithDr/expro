@@ -8,7 +8,7 @@ paths:
         200:
           description: OK
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - goods
     post:
@@ -16,9 +16,9 @@ paths:
       operationId: createGoods
       responses:
         200:
-          $ref: "#/responses/OrderResultResponse"
+          $ref: "#/responses/GoodsResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - goods
   /goods/{goodsId}:
@@ -30,9 +30,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          $ref: "#/responses/OrderResultResponse"
+          $ref: "#/responses/GoodsResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - goods
     put:
@@ -42,9 +42,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          $ref: "#/responses/OrderResultResponse"
+          $ref: "#/responses/GoodsResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - goods
     delete:
@@ -54,9 +54,9 @@ paths:
         - $ref: "#/parameters/goods-id-in-path"
       responses:
         200:
-          $ref: "#/responses/ApiResponse"
+          $ref: "#/responses/GoodsResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - goods
 
@@ -88,22 +88,31 @@ definitions:
         type: integer
       status:
         type: integer
-  OrderResult:
+  GoodsResult:
     properties:
-      code:
-        type: integer
-        default: 200
       result:
         type: object
         properties:
           order:
-            $ref: "#/definitions/Order"
+            $ref: "#/definitions/Goods"
+  GoodsQueryResult:
+    properties:
+      result:
+        type: array
+        items:
+          $ref: "#/definitions/Goods"
+      pagination:
+        $ref: "#/definitions/Pagination"
 
 responses:
-  OrderResultResponse:
+  GoodsResultResponse:
     description: Success
     schema:
-      $ref: "#/definitions/OrderResult"
+      $ref: "#/definitions/GoodsResult"
+  GoodsQueryResultResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/GoodsQueryResult"
 
 tags:
   - name: goods

@@ -22,36 +22,35 @@ produces:
   - application/xml
 
 definitions:
-
-  ApiResult:
-    additionalProperties: true
+  Pagination:
     properties:
-      code:
+      pageIndex:
         type: integer
-        default: 200
-      result:
-        type: string
-        default: OK
-  ApiErrorResult:
+        minimum: 1
+      pageSize:
+        type: integer
+        minimum: 1
+      totalPageCount:
+        type: integer
+        minimum: 0
+      totalItemCount:
+        type: integer
+        minimum: 0
+  ErrorResult:
     properties:
-      code:
-        type: integer
-        default: 500
       error:
-        $ref: "#/definitions/ApiError"
-  ApiError:
+        $ref: "#/definitions/Error"
+  Error:
     properties:
       code:
         type: string
+        description: error code
       message:
         type: string
+        description: error message
 
 responses:
-  ApiResponse:
-    description: Success
-    schema:
-      $ref: "#/definitions/ApiResult"
-  ApiErrorResponse:
+  ErrorResponse:
     description: Error
     schema:
-      $ref: "#/definitions/ApiErrorResult"
+      $ref: "#/definitions/ErrorResult"

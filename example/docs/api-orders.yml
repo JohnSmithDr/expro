@@ -89,6 +89,31 @@ definitions:
         format: dateTime
       status:
         type: string
+  OrderResult:
+    properties:
+      result:
+        type: object
+        properties:
+          order:
+            $ref: "#/definitions/Order"
+  OrdersQueryResult:
+    properties:
+      result:
+        type: array
+        items:
+          $ref: "#/definitions/Order"
+      pagination:
+        $ref: "#/definitions/Pagination"
+
+responses:
+  OrderResultResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/OrderResult"
+  OrdersQueryResultResponse:
+    description: Success
+    schema:
+      $ref: "#/definitions/OrdersQueryResult"
 
 tags:
   - name: orders

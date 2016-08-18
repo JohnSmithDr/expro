@@ -21,7 +21,7 @@ paths:
         200:
           $ref: "#/responses/UserResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - users
   /users/{username}:
@@ -35,7 +35,7 @@ paths:
         200:
           $ref: "#/responses/UserResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - users
     put:
@@ -47,7 +47,7 @@ paths:
         200:
           $ref: "#/responses/UserResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - users
     delete:
@@ -57,9 +57,9 @@ paths:
         - $ref: "#/parameters/username-in-path"
       responses:
         200:
-          $ref: "#/responses/ApiResponse"
+          $ref: "#/responses/UserResultResponse"
         default:
-          $ref: "#/responses/ApiErrorResponse"
+          $ref: "#/responses/ErrorResponse"
       tags:
         - users
 
