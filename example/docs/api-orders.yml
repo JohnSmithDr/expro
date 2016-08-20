@@ -60,14 +60,11 @@ paths:
       operationId: updateOrderShippingData
       parameters:
         - $ref: "#/parameters/orderId"
-        - in: body
-          name: body
+        - in: formData
+          name: shippingDate
           required: true
-          schema:
-            properties:
-              shippingData:
-                type: string
-                format: dateTime
+          type: string
+          format: dateTime
       responses:
         200:
           $ref: "#/responses/OrderResultResponse"
@@ -82,13 +79,10 @@ paths:
       operationId: updateOrderStatus
       parameters:
         - $ref: "#/parameters/orderId"
-        - in: body
-          name: body
+        - in: formData
+          name: status
           required: true
-          schema:
-            properties:
-              status:
-                type: string
+          type: string
       responses:
         200:
           $ref: "#/responses/OrderResultResponse"
@@ -110,7 +104,7 @@ definitions:
       goods:
         type: array
         items:
-          $ref: "#/definitions/Goods"
+          $ref: "#/definitions/OrderGoods"
       buyer:
         $ref: "#/definitions/User"
       contactName:
@@ -136,7 +130,7 @@ definitions:
       goods:
         type: array
         items:
-          $ref: "#/definitions/Goods"
+          $ref: "#/definitions/OrderGoods"
       totalFee:
         type: number
       buyer:
