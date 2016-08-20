@@ -19,7 +19,7 @@ function updateUser(username, params) {
   return dataSource.users.findByUsername(username)
     .then(users => {
       if (users.length === 0) {
-        return makeReject(404, 'USER_NO_EXISTS', `User does not exists: ${username}`);
+        return makeReject(404, 'USER_NOT_EXISTS', `User does not exists: ${username}`);
       }
       let user = users[0];
       user = Object.assign(user, params);
@@ -28,7 +28,12 @@ function updateUser(username, params) {
 }
 
 function deleteUser(username) {
-  return dataSource.users.findAndRemoveByUsername(username);
+  return dataSource.users.findAndRemoveByUsername(username)
+    .then(user => {
+      return user
+        ? Promise.resolve(user)
+        : makeReject(404, 'USER_NOT_EXISTS', `User does not exists: ${username}`);
+    });
 }
 
 function getUser(username) {
@@ -36,7 +41,7 @@ function getUser(username) {
     .findByUsername(username)
     .then(users => {
       if (users.length === 0) {
-        return makeReject(404, 'USER_NO_EXISTS', `User does not exists: ${username}`);
+        return makeReject(404, 'USER_NOT_EXISTS', `User does not exists: ${username}`);
       }
       return Promise.resolve(users[0]);
     });
