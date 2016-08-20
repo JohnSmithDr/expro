@@ -10,6 +10,11 @@ const PORT = 3000;
 
 let app = express();
 
+app.use((req, res, next) => {
+  console.log('[REQUEST] %s: %s', req.method, req.url);
+  next();
+});
+
 app.use(expro.header('Access-Control-Allow-Origin', '*'));
 
 let swaggerSpec = require('./docs/swagger');

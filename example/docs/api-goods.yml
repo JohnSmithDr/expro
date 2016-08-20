@@ -4,6 +4,17 @@ paths:
     get:
       summary: List goods
       operationId: listGoods
+      parameters:
+        - in: query
+          name: pageIndex
+          type: string
+          format: integer
+          required: false
+        - in: query
+          name: pageSize
+          type: string
+          format: integer
+          required: false
       responses:
         200:
           $ref: "#/responses/GoodsQueryResultResponse"

@@ -57,15 +57,19 @@ class UsersCollection extends Collection {
   }
 
   findByUsername(username) {
-    let users = this.items().filter(s => s.username === username);
-    return Promise.resolve(users);
+    return this
+      .items()
+      .then(users => users.filter(s => s.username === username));
   }
 
   findAndRemoveByUsername(username) {
-    let users = this.items().filter(s => s.username === username);
-    return users[0]
-      ? this.findAndRemoveById(users[0].id)
-      : Promise.resolve(null);
+    return this
+      .findByUsername(username)
+      .then(users => {
+        return users[0]
+          ? this.findAndRemoveById(users[0].id)
+          : Promise.resolve(null);
+      });
   }
 
 }
@@ -78,12 +82,16 @@ const dataSource = {
 
 const _genUser = () => {
   let users = _.range(10).map(() => {
+    let name = chance.last();
+    let fullname = chance.first() + ' ' + name;
     return {
-      username: chance.last(),
-      email: chance.email({ domain: "example.com" }),
+      username: name.toLowerCase(),
+      fullname: fullname,
+      email: `${fullname.toLowerCase().replace(/\s+/g, '_')}@example.com`,
       phone: chance.phone({ formatted: false })
     };
   });
+  console.log('users:', users);
   dataSource.users.insertMany(users);
 };
 
@@ -95,7 +103,7 @@ const _genGoods = () => {
       category: chance.word(),
       price: chance.floating({ min: 10, max: 100, fixed: 2 }),
       count: chance.integer({ min: 0, max: 1000 }),
-      tags: _.range(_.random(2, 8)).map(chance.word)
+      tags: _.range(_.random(2, 8)).map(() => chance.word())
     };
   });
   dataSource.goods.insertMany(goods);
@@ -110,6 +118,6 @@ const _genOrders = () => {
 
 _genUser();
 _genGoods();
-_genOrders();
+// _genOrders();
 
 module.exports = dataSource;

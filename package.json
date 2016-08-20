@@ -16,6 +16,7 @@
   "author": "johnsmith1st <johnsmith1st@live.com>",
   "license": "MIT",
   "devDependencies": {
+    "bluebird": "^3.4.1",
     "chai": "^3.5.0",
     "chance": "^1.0.4",
     "express": "^4.14.0",

@@ -73,12 +73,16 @@ definitions:
     properties:
       username:
         type: string
+      fullname:
+        type: string
       email:
         type: string
       phone:
         type: string
   UserModification:
     properties:
+      fullname:
+        type: string
       email:
         type: string
       phone:
@@ -88,6 +92,8 @@ definitions:
       id:
         type: string
       username:
+        type: string
+      fullname:
         type: string
       email:
         type: string
