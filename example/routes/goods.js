@@ -34,6 +34,8 @@ module.exports.getGoods = expro(
 );
 
 module.exports.listGoods = expro(
+  expro.query.prop('pageIndex').toInt(),
+  expro.query.prop('pageSize').toInt(),
   expro
     .with(x => x.query)
     .await(goodsService.listGoods)

@@ -27,7 +27,34 @@ function getGoods(goodsId) {
 }
 
 function listGoods(query) {
-  return dataSource.goods.items();
+
+  let pageIndex = query['pageIndex'] || 1,
+      pageSize = query['pageSize'] || 10,
+      totalPagesCount = 0,
+      totalItemsCount = 0;
+
+  if (pageIndex <= 0) pageIndex = 1;
+  if (pageSize >= 50) pageSize = 50;
+
+  return dataSource.goods.items()
+    .then(items => {
+
+      totalItemsCount = items.length;
+      totalPagesCount = Math.ceil(totalItemsCount / pageSize);
+
+      let start = (pageIndex - 1) * pageSize;
+      let goods = items.slice(start, start + pageSize);
+      return Promise.resolve({
+        goods,
+        pagination: {
+          pageIndex,
+          pageSize,
+          totalItemsCount,
+          totalPagesCount
+        }
+      });
+
+    });
 }
 
 module.exports = { createGoods, updateGoods, deleteGoods, getGoods, listGoods };

@@ -7,13 +7,11 @@ paths:
       parameters:
         - in: query
           name: pageIndex
-          type: string
-          format: integer
+          type: integer
           required: false
         - in: query
           name: pageSize
-          type: string
-          format: integer
+          type: integer
           required: false
       responses:
         200:
