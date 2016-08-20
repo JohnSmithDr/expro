@@ -11,7 +11,7 @@ function updateGoods(goodsId, params) {
   return dataSource.goods.findById(goodsId)
     .then(goods => {
       if (!goods) {
-        return makeReject(400, 'GOODS_NO_EXISTS', `Goods does not exists: ${goodsId}`);
+        return makeReject(400, 'GOODS_NOT_FOUND', `Goods not found: ${goodsId}`);
       }
       goods = Object.assign(goods, params);
       return dataSource.users.insertOrUpdate(goods);
@@ -19,11 +19,21 @@ function updateGoods(goodsId, params) {
 }
 
 function deleteGoods(goodsId) {
-  return dataSource.goods.findAndRemoveById(goodsId);
+  return dataSource.goods.findAndRemoveById(goodsId)
+    .then(goods => {
+      return goods
+        ? Promise.resolve(goods)
+        : makeReject(404, 'GOODS_NOT_FOUND', `Goods not found: ${goodsId}`);
+    });
 }
 
 function getGoods(goodsId) {
-  return dataSource.goods.findById(goodsId);
+  return dataSource.goods.findById(goodsId)
+    .then(goods => {
+      return goods
+        ? Promise.resolve(goods)
+        : makeReject(404, 'GOODS_NOT_FOUND', `Goods not found: ${goodsId}`);
+    });
 }
 
 function listGoods(query) {
