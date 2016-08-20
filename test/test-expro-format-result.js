@@ -34,7 +34,6 @@ describe('expro.formatResult()', function () {
     res.on('end', () => {
       try {
         logger.debug('result:', res._send);
-        expect(res._status).to.equal(200);
         expect(res._send).to.deep.equal({
           result: { foo: 'bar' }
         });
@@ -61,7 +60,6 @@ describe('expro.formatResult()', function () {
     let res = new MockResponse({
       req: req,
       expro: {
-        statusCode: 201,
         result: 'created'
       }
     });
@@ -69,7 +67,6 @@ describe('expro.formatResult()', function () {
     res.on('end', () => {
       try {
         logger.debug('result:', res._send);
-        expect(res._status).to.equal(201);
         expect(res._send).to.deep.equal({
           result: 'created'
         });
@@ -96,7 +93,6 @@ describe('expro.formatResult()', function () {
     let res = new MockResponse({
       req: req,
       expro: {
-        statusCode: 201,
         result: 'created'
       }
     });
@@ -104,7 +100,6 @@ describe('expro.formatResult()', function () {
     res.on('end', () => {
       try {
         logger.debug('result:', res._send);
-        expect(res._status).to.equal(201);
         expect(res._send).to.deep.equal('created');
         done();
       }
@@ -114,8 +109,8 @@ describe('expro.formatResult()', function () {
     });
 
     expro.formatResult({
-      text: (res, code, result) => {
-        res.status(code).send(result.toString());
+      text: (res, result) => {
+        res.send(result.toString());
       }
     })
     (req, res, () => {
