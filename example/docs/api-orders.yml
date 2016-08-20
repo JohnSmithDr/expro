@@ -99,14 +99,20 @@ parameters:
     required: true
 
 definitions:
+  GoodsToBuy:
+    properties:
+      goodsId:
+        type: string
+      quantity:
+        type: integer
   OrderCreation:
     properties:
       goods:
         type: array
         items:
-          $ref: "#/definitions/OrderGoods"
+          $ref: "#/definitions/GoodsToBuy"
       buyer:
-        $ref: "#/definitions/User"
+        type: string
       contactName:
         type: string
       contactPhone:
@@ -134,7 +140,7 @@ definitions:
       totalFee:
         type: number
       buyer:
-        $ref: "#/definitions/User"
+        type: string
       contactName:
         type: string
       contactPhone:

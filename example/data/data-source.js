@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const chance = require('chance').Chance();
+const Promise = require('bluebird');
 
 const objectId = () => {
   let chars = '0a1b2c3d4e5f6789';
