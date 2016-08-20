@@ -29,7 +29,7 @@ function queryOrders(query) {
   return Promise.resolve(query);
 }
 
-function updateOrderShippingDate(orderId, date) {
+function updateOrderShippingDate(orderId, shippingDate) {
   return dataSource.orders.findById(orderId)
     .then(order => {
       if (!order) return makeReject(404, 'ORDER_NOT_FOUND', `Order not found: ${orderId}`);
