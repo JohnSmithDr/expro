@@ -32,7 +32,7 @@ module.exports.queryOrders = expro(
     .await(ordersService.queryOrders)
 );
 
-module.exports.updateOrderShippingData = expro(
+module.exports.updateOrderShippingDate = expro(
   expro
     .with(x => x.swagger.params['orderId'].value, x => x.body.shippingDate)
     .await(ordersService.updateOrderShippingDate),
