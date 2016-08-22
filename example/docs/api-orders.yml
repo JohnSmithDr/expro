@@ -3,7 +3,17 @@ paths:
     x-swagger-router-controller: orders
     get:
       summary: Query orders
+      description: Query orders by id, it can be an id array separates by comma.
       operationId: queryOrders
+      parameters:
+        - in: query
+          name: id
+          type: string
+          description: query order by id
+        - in: query
+          name: buyer
+          type: string
+          description: query order by buyer id
       responses:
         200:
           $ref: "#/responses/OrdersQueryResultResponse"
