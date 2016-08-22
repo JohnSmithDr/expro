@@ -31,7 +31,7 @@ class Collection {
   }
 
   insertMany(arr) {
-    return Promise.resolve(arr.map(s => this.insertOrUpdate(s)));
+    return Promise.map(arr, s => this.insertOrUpdate(s));
   }
 
   items() {
@@ -81,7 +81,7 @@ const dataSource = {
   orders: new Collection('orders')
 };
 
-const _genUser = () => {
+const _genUsers = () => {
   let users = _.range(10).map(() => {
     let name = chance.last();
     let fullname = chance.first() + ' ' + name;
@@ -92,12 +92,11 @@ const _genUser = () => {
       phone: chance.phone({ formatted: false })
     };
   });
-  console.log('users:', users);
-  dataSource.users.insertMany(users);
+  return dataSource.users.insertMany(users);
 };
 
 const _genGoods = () => {
-  let goods = _.range(100).map(() => {
+  let goods = _.range(10).map(() => {
     return {
       name: chance.word(),
       desc: chance.sentence(),
@@ -107,7 +106,7 @@ const _genGoods = () => {
       tags: _.range(_.random(2, 8)).map(() => chance.word())
     };
   });
-  dataSource.goods.insertMany(goods);
+  return dataSource.goods.insertMany(goods);
 };
 
 const _genOrders = () => {
@@ -117,8 +116,8 @@ const _genOrders = () => {
   //   });
 };
 
-_genUser();
-_genGoods();
+_genUsers().then(users => console.log('users:', users));
+_genGoods().then(goods => console.log('goods:', goods));
 // _genOrders();
 
 module.exports = dataSource;
