@@ -82,31 +82,81 @@ const dataSource = {
 };
 
 const _genUsers = () => {
-  let users = _.range(10).map(() => {
-    let name = chance.last();
-    let fullname = chance.first() + ' ' + name;
-    return {
-      username: name.toLowerCase(),
-      fullname: fullname,
-      email: `${fullname.toLowerCase().replace(/\s+/g, '_')}@example.com`,
+  let demoUsers = [
+    {
+      username: 'john',
+      fullname: 'John Smith',
+      email: 'johnsmith@example.com',
       phone: chance.phone({ formatted: false })
-    };
-  });
-  return dataSource.users.insertMany(users);
+    },
+    {
+      username: 'jane',
+      fullname: 'Jane Smith',
+      email: 'janesmith@example.com',
+      phone: chance.phone({ formatted: false })
+    }
+  ];
+  return dataSource.users.insertMany(demoUsers);
 };
 
 const _genGoods = () => {
-  let goods = _.range(10).map(() => {
-    return {
-      name: chance.word(),
+  let demoGoods = [
+    {
+      id: '0001',
+      name: 'Cappuccino',
       desc: chance.sentence(),
-      category: chance.word(),
-      price: chance.floating({ min: 10, max: 100, fixed: 2 }),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
       count: chance.integer({ min: 0, max: 1000 }),
-      tags: _.range(_.random(2, 8)).map(() => chance.word())
-    };
-  });
-  return dataSource.goods.insertMany(goods);
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    },
+    {
+      id: '0002',
+      name: 'Mocha',
+      desc: chance.sentence(),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
+      count: chance.integer({ min: 0, max: 1000 }),
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    },
+    {
+      id: '0003',
+      name: 'Latte',
+      desc: chance.sentence(),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
+      count: chance.integer({ min: 0, max: 1000 }),
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    },
+    {
+      id: '0004',
+      name: 'Espresso',
+      desc: chance.sentence(),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
+      count: chance.integer({ min: 0, max: 1000 }),
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    },
+    {
+      id: '0005',
+      name: 'Flat White',
+      desc: chance.sentence(),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
+      count: chance.integer({ min: 0, max: 1000 }),
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    },
+    {
+      id: '0006',
+      name: 'Americano',
+      desc: chance.sentence(),
+      category: 'Coffee',
+      price: chance.floating({ min: 10, max: 200, fixed: 2 }),
+      count: chance.integer({ min: 0, max: 1000 }),
+      tags: [ 'Coffee', 'Cafe', 'Drinks' ]
+    }
+  ];
+  return dataSource.goods.insertMany(demoGoods);
 };
 
 const _genOrders = () => {
