@@ -174,15 +174,7 @@ const _genGoods = () => {
   return dataSource.goods.insertMany(demoGoods);
 };
 
-const  _genOrders = () => {
-  // dataSource.users.find()
-  //   .then(users => {
-  //
-  //   });
-};
-
 _genUsers().then(users => console.log('users:', users));
 _genGoods().then(goods => console.log('goods:', goods));
-// _genOrders();
 
 module.exports = dataSource;
