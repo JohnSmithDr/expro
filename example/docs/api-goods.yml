@@ -6,6 +6,10 @@ paths:
       operationId: listGoods
       parameters:
         - in: query
+          name: category
+          type: string
+          required: false
+        - in: query
           name: pageIndex
           type: integer
           required: false

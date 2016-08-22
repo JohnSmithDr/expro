@@ -39,6 +39,17 @@ class Collection {
     return Promise.resolve(arr);
   }
 
+  find(condition) {
+    return this.items()
+      .then(items => {
+        if (_.isEmpty(condition)) return Promise.resolve(items);
+        let filtered = items.filter(s => {
+          return Object.keys(condition).every(key => s[key] === condition[key]);
+        });
+        return Promise.resolve(filtered);
+      });
+  }
+
   findById(id) {
     return Promise.resolve(this._coll.get(id));
   }

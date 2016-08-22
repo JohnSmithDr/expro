@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 const dataSource = require('../data/data-source');
 const makeReject = require('../errors').makeReject;
 
@@ -46,7 +48,9 @@ function listGoods(query) {
   if (pageIndex <= 0) pageIndex = 1;
   if (pageSize >= 50) pageSize = 50;
 
-  return dataSource.goods.items()
+  let condition = _.omit(query, ['pageIndex', 'pageSize']);
+
+  return dataSource.goods.find(condition)
     .then(items => {
 
       totalItemsCount = items.length;
