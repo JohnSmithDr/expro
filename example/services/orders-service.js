@@ -70,7 +70,54 @@ function getOrder(orderId) {
 }
 
 function queryOrders(query) {
-  return Promise.resolve(query);
+
+  let pageIndex = query['pageIndex'] || 1,
+      pageSize = query['pageSize'] || 10,
+      totalPagesCount = 0,
+      totalItemsCount = 0;
+
+  if (pageIndex <= 0) pageIndex = 1;
+  if (pageSize >= 50) pageSize = 50;
+
+  let condition = _.omit(query, ['pageIndex', 'pageSize']);
+
+  console.log('condition:', condition);
+
+  if (_.isEmpty(condition)) {
+    return {
+      orders: []
+    };
+  }
+
+  let find = condition['id']
+    ? dataSource.orders.findById(condition['id'])
+    : dataSource.orders.items();
+
+  return find
+    .then(orders => {
+
+      console.log('orders:', orders);
+
+      if (condition['buyer']) {
+        orders = orders.filter(s => s['buyer'] === condition['buyer']);
+      }
+
+      totalItemsCount = orders.length;
+      totalPagesCount = Math.ceil(totalItemsCount / pageSize);
+
+      let start = (pageIndex - 1) * pageSize;
+      orders = orders.slice(start, start + pageSize);
+      return Promise.resolve({
+        orders,
+        pagination: {
+          pageIndex,
+          pageSize,
+          totalItemsCount,
+          totalPagesCount
+        }
+      });
+
+    });
 }
 
 function updateOrderShippingDate(orderId, shippingDate) {

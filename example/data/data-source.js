@@ -51,6 +51,10 @@ class Collection {
   }
 
   findById(id) {
+    if (Array.isArray(id) && id.length) {
+      let items = id.map(key => this._coll.get(key)).filter(s => s);
+      return Promise.resolve(items);
+    }
     return Promise.resolve(this._coll.get(id));
   }
 
@@ -170,7 +174,7 @@ const _genGoods = () => {
   return dataSource.goods.insertMany(demoGoods);
 };
 
-const _genOrders = () => {
+const  _genOrders = () => {
   // dataSource.users.find()
   //   .then(users => {
   //

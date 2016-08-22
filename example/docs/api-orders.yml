@@ -14,6 +14,18 @@ paths:
           name: buyer
           type: string
           description: query order by buyer id
+        - in: query
+          name: pageIndex
+          type: integer
+          required: false
+          default: 1
+          minimum: 1
+        - in: query
+          name: pageSize
+          type: integer
+          required: false
+          default: 50
+          maximum: 50
       responses:
         200:
           $ref: "#/responses/OrdersQueryResultResponse"

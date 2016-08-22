@@ -27,6 +27,9 @@ module.exports.getOrder = expro(
 );
 
 module.exports.queryOrders = expro(
+  expro.query.prop('id').toArray(),
+  expro.query.prop('pageIndex').toInt(),
+  expro.query.prop('pageSize').toInt(),
   expro
     .with(x => x.query)
     .await(ordersService.queryOrders)
