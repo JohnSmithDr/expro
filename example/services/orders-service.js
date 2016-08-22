@@ -43,7 +43,7 @@ function createOrder(params) {
 
       let order = Object.assign({},
         _.pick(params, ['buyer', 'contactName', 'contactPhone', 'shippingAddress']),
-        { goods: orderGoods, totalFee: totalFee }
+        { goods: orderGoods, totalFee: totalFee, status: 'created' }
       );
 
       return dataSource.orders.insertOrUpdate(order);

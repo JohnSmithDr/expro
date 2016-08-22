@@ -105,6 +105,12 @@ paths:
           name: status
           required: true
           type: string
+          enum:
+            - created
+            - paid
+            - shipped
+            - delivered
+            - closed
       responses:
         200:
           $ref: "#/responses/OrderResultResponse"
