@@ -8,7 +8,7 @@ const makeReject = require('../errors').makeReject;
 
 function createOrder(params) {
 
-  let buyer = params['buyer'], goodsId = params.goods.map(s => s.id);
+  let buyer = params['buyer'], goodsId = params.goods.map(s => s.goodsId);
 
   if (!goodsId.length) {
     return makeReject(400, 'NO_ORDER_GOODS', 'Go and pick some goods first.');
@@ -23,6 +23,7 @@ function createOrder(params) {
     .then(goods => {
 
       let goodsMap = _.zip(goodsId, goods, params.goods);
+
       let firstNotFound = _.find(goodsMap, s => !s[1]);
 
       if (firstNotFound) {
