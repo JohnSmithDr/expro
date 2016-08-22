@@ -63,11 +63,11 @@ paths:
           $ref: "#/responses/ErrorResponse"
       tags:
         - orders
-  /orders/{orderId}/shippingData:
+  /orders/{orderId}/shippingDate:
     x-swagger-router-controller: orders
     patch:
-      summary: Update order shipping data
-      operationId: updateOrderShippingData
+      summary: Update order shipping date
+      operationId: updateOrderShippingDate
       parameters:
         - $ref: "#/parameters/orderId"
         - in: formData
