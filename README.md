@@ -54,7 +54,7 @@ To create expro await middleware.
 expro.await(req => async(req));
 ```
 
-#### expro.header(field [, value])
+#### expro.header(field \[, value\])
 
 To create middleware to write/overwrite response header.
 
@@ -77,6 +77,105 @@ expro(
   expro.status(201),
   expro.formatResult()
 );
+```
+
+#### expro.formatResult(\[formatter\])
+
+To create middleware to send formatted result. Default to send result in json.
+
+```js
+expro(
+  expro.await(req => Promise.resolve({ foo: 'bar' })),
+  expro.formatResult()
+);
+
+// -> { result: { foo: 'bar' } }
+```
+
+Can be use as application-level middleware:
+
+```js
+let app = express();
+
+app.get('/', expro.await(req => Promise.resolve({ foo: 'bar' })));
+
+app.use(expro.formatResult());
+```
+
+And with customized formatter:
+
+```js
+let app = express();
+
+app.get('/', expro.await(req => Promise.resolve({ foo: 'bar' })));
+
+app.use(expro.formatResult({
+  json: (res, result) => {
+    res.json({ code: res.statusCode, data: result });
+  },
+  xml: (res, result) => {
+    let json = {
+      code: res.statusCode,
+      data: result
+    };
+    let xml = xmlParser.toXml(json);
+    res.send(xml);
+  },
+  default: (res, result) => {
+    res.status(406).send('Not Acceptable');
+  }
+}));
+```
+
+#### expro.formatError(\[formatter\])
+
+Create middleware to send formatted error result. Default to send error in json.
+
+```js
+expro(
+  expro.await(req => Promise.reject(Error('oops'))),
+  expro.formatError()
+);
+
+// -> { error: { message: 'oops' } }
+```
+
+Can be use as application-level middleware:
+
+```js
+let app = express();
+
+app.get('/', expro.await(req => Promise.reject(Error('oops'))));
+
+app.use(expro.formatError());
+```
+
+And with customized formatter:
+
+```js
+let app = express();
+
+app.get('/', expro.await(req => Promise.reject(Error('oops'))));
+
+app.use(expro.formatError({
+  json: (err, result) => {
+    res.status(err.statusCode).send({
+      code: err.statusCode,
+      error_message: err.message
+    });
+  },
+  xml: (res, result) => {
+    let json = {
+      code: err.statusCode,
+      error_message: err.message
+    };
+    let xml = xmlParser.toXml(json);
+    res.status(err.statusCode).send(xml);
+  },
+  default: (res, result) => {
+    res.status(406).send('Not Acceptable');
+  }
+}));
 ```
 
 ## License
