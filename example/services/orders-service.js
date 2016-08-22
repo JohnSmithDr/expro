@@ -42,7 +42,7 @@ function createOrder(params) {
       let totalFee = orderGoods.reduce((r, c) => r + c.price * c.quantity, 0);
 
       let order = Object.assign({},
-        _.pick(params, ['buyerId', 'contactName', 'contactPhone', 'shippingAddress']),
+        _.pick(params, ['buyer', 'contactName', 'contactPhone', 'shippingAddress']),
         { goods: orderGoods, totalFee: totalFee }
       );
 
@@ -81,8 +81,6 @@ function queryOrders(query) {
 
   let condition = _.omit(query, ['pageIndex', 'pageSize']);
 
-  console.log('condition:', condition);
-
   if (_.isEmpty(condition)) {
     return {
       orders: []
@@ -95,8 +93,6 @@ function queryOrders(query) {
 
   return find
     .then(orders => {
-
-      console.log('orders:', orders);
 
       if (condition['buyer']) {
         orders = orders.filter(s => s['buyer'] === condition['buyer']);
