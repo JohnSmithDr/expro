@@ -54,6 +54,24 @@ To create expro await middleware.
 expro.await(req => async(req));
 ```
 
+#### expro.with(selector1, selector2, ...)
+
+To create expro args selectors context.
+
+```js
+expro
+  .with(x => x.params.id, x => x.body)
+  .await((id, body) => async(id, body));
+```
+
+Or use property selectors:
+
+```js
+expro
+  .with('params.id', 'body')
+  .await((id, body) => async(id, body));
+```
+
 #### expro.header(field \[, value\])
 
 To create middleware to write/overwrite response header.
@@ -77,6 +95,36 @@ expro(
   expro.status(201),
   expro.formatResult()
 );
+```
+
+#### expro.mapResult(mapper)
+
+To create middleware to map the result into another form.
+
+```js
+expro(
+  expro.await(req => Promise.resolve({ foo: 'bar' })),
+  expro.mapResult(s => {
+    return { code: 'OK', data: s };
+  }),
+  expro.formatResult()
+);
+
+// -> { result: { code: 'OK', data: { foo: 'bar' } } }
+```
+
+#### expro.wrap(key)
+
+To create middleware to wrap result in the given key.
+
+```js
+expro(
+  expro.await(req => Promise.resolve({ foo: 'bar' })),
+  expro.wrap('data'),
+  expro.formatResult()
+);
+
+// -> { result: { data: { foo: 'bar' } } }
 ```
 
 #### expro.formatResult(\[formatter\])
