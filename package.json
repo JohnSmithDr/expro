@@ -1,6 +1,6 @@
 {
   "name": "expro",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Build middleware for expres more expressive.",
   "main": "index.js",
   "scripts": {
