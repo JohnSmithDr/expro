@@ -8,10 +8,16 @@
     "test": "mocha ./test/tests.js"
   },
   "keywords": [
+    "expro",
     "express",
     "middleware",
+    "async",
+    "await",
     "validator",
-    "converter"
+    "converter",
+    "selector",
+    "wrapper",
+    "formatter"
   ],
   "author": "johnsmith1st <johnsmith1st@live.com>",
   "license": "MIT",
