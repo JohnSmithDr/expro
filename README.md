@@ -1,6 +1,7 @@
 # expro
 
 [![Build Status](https://travis-ci.org/JohnSmithDr/expro.svg?branch=master)](https://travis-ci.org/JohnSmithDr/expro)
+[![Coverage Status](https://coveralls.io/repos/github/JohnSmithDr/expro/badge.svg?branch=master)](https://coveralls.io/github/JohnSmithDr/expro?branch=master)
 
 Build express middleware more expressive.
 
